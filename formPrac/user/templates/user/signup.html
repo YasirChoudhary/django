@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+
+    <form action="{% url 'user:signup' %}" method="post">
+
+        {% csrf_token %}
+
+        <label for="id_user">Username</label>
+        <input type="text" name="username" id="id_user" required/><br/>
+        <br>
+        <label for="id_password">Password</label>
+        <input type="password" name="password" id="id_password" required>
+
+        <input type="submit" value="Register">
+
+
+
+    </form>
+
+
+</body>
+</html>

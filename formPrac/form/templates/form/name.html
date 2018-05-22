@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body>
+
+<<<<<<< HEAD
+    <form action="{% url 'form:get_Name' %}" method="post">
+=======
+    <form action="{% url 'get_Name' %}" method="post">
+>>>>>>> bb980a8d69038e69ac8eb1831811fe1bb3ecae27
+
+        {% csrf_token %}
+
+        {{ form }}
+        <!--
+        <label for="your_name">your name</label>
+        <input type="text" id="your_name" name="your_name" value="{{ current_name }}">
+        -->
+        <br/>
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+</html>
