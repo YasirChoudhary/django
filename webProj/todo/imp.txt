@@ -1,0 +1,44 @@
+
+1) to remove migrations
+
+first delete the migrations file except __init__.py
+
+python manage.py migrate --fake appname zero
+
+
+2)
+>>> usr = User.objects.get(id=1)
+>>> task = Task()
+>>> task.user = usr
+>>> task.task_text = "Design"
+>>> task.due_date = "2018-05-22"
+>>> task.save()
+
+
+>>> from todo.models import User,Task
+>>> Task.objects.get(user_id=1)
+<Task: Design>
+
+
+>>> user = User.objects.get(username='Yasir')
+>>> Task.objects.get(user=user)
+<Task: Design>
+
+
+>>> User.objects.get(username="Yasir")
+<User: User object>
+>>> Task.objects.get(user=user)
+<Task: Design>
+
+3)
+>>> user= User.objects.get(id=1)
+>>> user.task_text
+
+
+4)
+1. Type &nbsp; to add one space.
+2. Type &ensp; to add two spaces.
+3. Type &emsp; to add four spaces.
+4. Type &nbsp;&nbsp;&nbsp;&nbsp; to insert a tab.
+
+

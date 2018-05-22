@@ -1,0 +1,28 @@
+{% extends 'music/base.html' %}
+{% block title %}Create New Account{% endblock %}
+
+
+{% block body %}
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div>
+                <span>{{ field.errors }}</span>
+            </div>
+            <label>{{ field.label_tag }}</label>
+            <div>{{ field}}</div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+
+{% endblock %}
+
+

@@ -1,0 +1,54 @@
+album2 = Album.objects.get(pk=2)
+>>> song2 = Song()
+>>> song2.album=album2
+>>> song2.file_type = "mp3"
+>>> song2.song_title = "aaaaaa"
+>>> song2.save()
+
+
+album1 = Album.objects.get(pk=1)
+>>> album1.song_set.all()
+[<Song: songtitle = lllll>]
+
+
+>>> album3 = Album()
+>>> album3.artist="Hardik"
+>>> album3.album_title = "Midas"
+>>> album3.genre = "Finance"
+>>> album3.album_logo = "hhh"
+>>> album3.save()
+>>> album3.song_set.create(file_type="mp3",song_title="Hardik's Song")
+<Song: songtitle = Hardik's Song>
+>>> album3.song_set.create(file_type="mp4",song_title="Song Song")
+<Song: songtitle = Song Song>
+>>> album3.song_set.create(file_type="mp4",song_title="ssss Song")
+<Song: songtitle = ssss Song>
+>>> album3.song_set.create(file_type="mp4",song_title="ttt ttt")
+
+
+>>> album3 = Album.objects.get(pk=3)
+>>> album3.song_set.create(file_type="mp3",song_title="Hardik's Song")
+<Song: songtitle = Hardik's Song>
+>>> song = album3.song_set.create(file_type="mp3",song_title="Hardik's Song")
+>>> song.album
+<Album: artist=Hardik , album_title=Midas>
+>>> song.song_title
+"Hardik's Song"
+>>> album3.song_set.all()
+[<Song: songtitle = Hardik's Song>, <Song: songtitle = Song Song>, <Song: songtitle = ssss Song>, <Song: songtitle = ttt ttt>, <Song: songtitle = Hardik's Song>, <Song: songtitle = Hardik's Song>]
+>>> album3.song_set.count()
+6
+>>>
+
+
+def detail(request, album_id):
+    try:
+        album = Album.objects.get(pk=album_id)
+    except Album.DoesNotExist:
+        raise Http404("Album does not exist")
+    return render(request, 'music/detail.html', { 'album':album})
+
+
+{% if song.is_favourite %}
+                    <img src="Code/mysite/music/Images/sample.jpg">
+                {% endif %}

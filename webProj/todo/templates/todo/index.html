@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/style.css' %}">
+
+    <h4>welcome {{username}} </h4>
+
+    <h2>My To do list</h2>
+
+    {% if tasks_list %}
+
+    <table>
+      <tr>
+        <th>Task List</th>
+        <th>Due Date</th>
+        <th>Delete task</th>
+        <th>Edit task</th>
+      </tr>
+
+        {% for task in tasks_list %}
+
+        <tr>
+            <td>{{ task.task_text }}</td>
+            <td>{{ task.due_date }}</td>
+            <td><a href="{% url 'todo:delete' task.id %}">Delete</a></td>
+            <td><a href="{% url 'todo:edit' task.id %}">Edit</a></td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+        <h3>There is no task available</h3>
+    {% endif %}
+<!--
+
+ {% if tasks_empty_list %}
+
+    {% endif %}
+
+-->
+
+
+
+
+
+    <a href="{% url 'todo:addtask' %}"><button>Add New Task</button></a>
+
+
+</body>
+</html>
+
+
+
+
+
+<!--
+
+ <h2>My To do list</h2>
+    {% if tasks_list %}
+        {% for task in tasks_list %}
+        <h5>{{ task.task_text }} : {{ task.due_date }}</h5>
+        {% endfor %}
+
+    {% else %}
+        <h3>There is no task available</h3>
+    {% endif %}
+
+    {% if tasks_empty_list %}
+
+    {% endif %}
+
+
+-->

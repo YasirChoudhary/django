@@ -1,0 +1,25 @@
+{% extends 'music/base.html' %}
+{% block title %}Add New Title{% endblock %}
+
+{% block body %}
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div>
+            <span>{{ field.errors }}</span>
+        </div>
+        <label>{{ field.label_tag }}</label>
+        <div> {{ field }} </div>
+
+        {% endfor %}
+
+        <!-- Here action is none -->
+
+
+        <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+
+{% endblock %}

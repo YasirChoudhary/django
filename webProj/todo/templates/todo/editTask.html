@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>edit task</title>
+</head>
+<body>
+
+
+
+     {% if id %}
+
+    <form action="{% url 'todo:edit' id %}" method="post">
+
+        {% csrf_token %}
+
+
+
+        <label for="id_task_text">Task &ensp;&ensp;</label>
+        <input type="text" name="task_text" id="id_task_text" required/><br>
+        <br>
+        <label for="id_due_date">Due date &nbsp;</label>
+        <input type="date" name="due_date" id="id_due_date" required/><br>
+        <br>
+
+        <input type="submit" value="Edit">
+
+    </form>
+
+    {% endif %}
+
+
+
+
+
+</body>
+</html>

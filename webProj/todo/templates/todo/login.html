@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+
+    <form action="{% url 'todo:login' %}" method="post">
+
+        {% csrf_token %}
+
+        <h3>Login</h3>
+
+        <label for="id_user">Username &nbsp;</label>
+        <input type="text" name="username" id="id_user" required/><br/>
+        <br/>
+        <label for="id_password">Password &ensp;</label>
+        <input type="password" name="password" id="id_password" required/><br/>
+        <br>
+
+        <input type="submit" value="Login">
+        <a href="{% url 'todo:signup' %}">Register</a>
+    </form>
+
+</body>
+</html>

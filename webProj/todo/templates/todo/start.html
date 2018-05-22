@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todo appp</title>
+</head>
+<body>
+
+<h1>Welcome to todo site</h1>
+<br><br>
+<br>
+<h4>Here you can track all your todo lists</h4>
+<br><br>
+
+<h4>If you are the existing user please login from your account else press the sign up link</h4>
+
+<a href="{% url 'todo:login' %}">Login</a>
+
+<a href="{% url 'todo:signup' %}">Sign Up</a>
+
+</body>
+</html>

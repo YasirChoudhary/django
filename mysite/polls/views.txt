@@ -1,0 +1,76 @@
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Question, Choice
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
+
+'''
+here django is a top level package
+http is a package inside django package
+HttpResponse is a class name
+
+->django 						package
+	->http 						package
+		->HttpResponse			class
+		->Http404				class Name
+
+->django														package
+	->template													package
+		->loader 												module name
+			->get_template(template_name, using=None) 				function
+			->render_to_string(template_name, context=None, request=None, using=None)		function
+			->select_template(template_name_list, using=None)
+
+'''
+
+
+
+def index(request):
+	latest_question_list = Question.objects.order_by('-pub_date')[:5]
+	context = { 'latest_question_list' : latest_question_list}
+	return render(request, 'polls/index.html', context)
+
+def detail(request, question_id):
+	question = get_object_or_404(Question, pk=question_id)
+	return render(request, 'polls/detail.html', { 'question' : question })
+
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try :
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        return render(request, 'polls/detail.html', {
+            'question' :question,
+            'error_message' : "You didn't select a choice ",
+        })
+    else :
+        selected_choice.votes += 1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse('polls:result', args=(question_id,)))
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', {'question' : question})
+
+
+'''
+from django.shortcuts import render, get_object_or_404
+
+render(request, template_name, context=None, content_type=None, status=None, using=None)
+        Returns a HttpResponse whose content is filled with the result of calling
+        django.template.loader.render_to_string() with the passed arguments.
+
+
+get_object_or_404(klass, *args, **kwargs)
+        Uses get() to return an object, or raises a Http404 exception if the object
+        does not exist.
+
+        klass may be a Model, Manager, or QuerySet object. All other passed
+        arguments and keyword arguments are used in the get() query.
+
+        Note: Like with get(), an MultipleObjectsReturned will be raised if more than one
+        object is found.
+
+'''

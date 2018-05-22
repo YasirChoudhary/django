@@ -1,0 +1,94 @@
+# index.html
+{% extends 'music/base.html' %}
+
+
+{% block body %}
+
+    {% if album_list %}
+     <h1>Album List</h1>
+    <ul>
+        {% for album in album_list %}
+            <li><a href="{% url 'music:detail' album.id %}">{{album.album_title}}</a> </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>albums are not available</p>
+    {% endif %}
+
+{% endblock %}
+
+# detail.html
+{% extends 'music/base.html' %}
+{% block title %}AlbumDetails{% endblock %}
+
+{% block body %}
+
+    <img src="album.album_logo">
+    <h2>{{ album.album_title }}</h2>
+
+    <h3>{{ album.artist }}</h3>
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <form action="{% url 'music:favourite' album.id %}" method="post">
+    {% csrf_token %}
+
+        {% for song in album.song_set.all %}
+            <input type="radio" name="song" id="song{{ forloop.counter }}" value="{{ song.id }}">
+
+                <label for="song{{ forloop.counter }}">
+                    {{ song.song_title }}
+                    {% if song.is_favourite %}
+                        <img src="static/music/images/sample.jpg" height="13" width="13">
+                    {% endif %}
+                </label><br/>
+
+        {% endfor %}
+
+        <input type="submit" value="favourite">
+
+    </form>
+
+{% endblock %}
+
+# views.py
+from .models import Album,Song
+from django.shortcuts import render, get_object_or_404
+
+def index(request):
+    album_list = Album.objects.all()
+    return render(request, 'music/index.html', {'album_list': album_list})
+
+
+def detail(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    return render(request, 'music/detail.html', { 'album':album})
+
+def favourite(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    try:
+        selected_song = album.song_set.get(pk=request.POST['song'])
+    except (KeyError,Song.DoesNotExist):
+        return render(request, 'music/detail.html', {
+            'album':album,
+            'error_message': "You didn't select a valid song",
+        })
+    else:
+        selected_song.is_favourite = True
+        selected_song.save()
+        return render(request, 'music/detail.html', {'album':album} )
+
+
+#urls
+url(r'^$', views.index , name='index'),
+
+    #/music/11
+    url(r'^(?P<album_id>[0-9]+)/$', views.detail, name='detail'),
+
+    #music/1222/favourite
+    url(r'^(?P<album_id>[0-9]+)/favourite/$', views.favourite, name='favourite')
+
+
+ {% include 'music/form-template.html' %}
